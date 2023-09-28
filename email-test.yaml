@@ -1,0 +1,22 @@
+---
+- name: Email Test
+  hosts: localhost
+  become: false
+  gather_facts: false
+  vars:
+    date_time_string: "{{ lookup('pipe','date -d \"now + 8 hours\" +%Y-%m-%d_%H-%M-%S') | string }}"
+  # vars_files:    
+  #   - vars/general.yaml
+  #   - vars/ocp_cluster_list.yaml
+  tasks:
+    - name: Email notification
+      ansible.builtin.include_role:
+        name: send-email
+      vars:
+        email_smtp_subject: "Test Report - {{ date_time_string }}"
+        email_report_body: "Test Content"
+        # email_report_attachment:
+        #   - "{{ health_check_report_file }}"
+        email_smtp_to_address: "{{ health_check_report_email_list | default('gineesh@redhat.com')}}"
+        subtype: html
+        charset: utf8

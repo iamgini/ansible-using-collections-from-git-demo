@@ -1,0 +1,8 @@
+collections:
+  - name: https://github.com/iamgini/ansible-collections-in-git-demo.git#/azure-azcollection-1.18.1/
+    type: git
+  #   # version: devel
+
+  - name: https://github.com/iamgini/ansible-collections-in-git-demo.git#/community-general-7.4.0/
+    type: git
+  #   # version: devel

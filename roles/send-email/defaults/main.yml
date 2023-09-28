@@ -1,0 +1,3 @@
+email_smtp_subject: "Email Subject Goes here"
+email_report_body: "This is a test email"
+# email_report_attachment: sample.txt

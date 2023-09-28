@@ -1,0 +1,20 @@
+---
+# tasks file for send-email
+
+- name: Sending email
+  community.general.mail:
+    host: "{{ email_smtp_server | default(lookup('ansible.builtin.env', 'EMAIL_SMTP_SERVER')) }}"
+    port: "{{ email_smtp_server_port | default( lookup('ansible.builtin.env', 'EMAIL_SMTP_PORT')) | int }}"
+    secure: starttls
+    from: "{{ email_smtp_from_address | default('ansibleautomtion@example.com') }} (Ansible Automation)"
+    to: "{{ email_smtp_to_address }}"
+    # cc: "{{ email_smtp_cc_address }}"
+    subject: "{{ email_smtp_subject | default('Report') }}"
+    body: "{{ email_report_body }}"
+    attach: "{{ email_report_attachment | default(omit) }}"
+    headers:
+      - Reply-To="{{ email_smtp_replyto_address | default(email_smtp_from_address) | default('ansibleautomtion@example.com') }}"
+    username: "{{ lookup('ansible.builtin.env', 'EMAIL_SMTP_USERNAME' | default(omit)) }}"
+    password: "{{ lookup('ansible.builtin.env', 'EMAIL_SMTP_PASSWORD' | default(omit)) }}"
+    subtype: "{{ subtype | default(omit) }}"
+    charset: "{{ charset | default(omit) }}"
